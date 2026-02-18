@@ -1,1 +1,7 @@
+//login into instance
 ssh -i ~/.ssh/flask-key.pem ubuntu@13.204.69.48
+ssh -i jenkins.pem ec2-user@13.60.240.93
+
+//git repo clone
+git clone https://github.com/Anju-Narnolia/new-repo
+
