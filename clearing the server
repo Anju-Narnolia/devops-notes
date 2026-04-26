@@ -1,0 +1,31 @@
+#!/bin/bash
+
+echo "🔍 Checking disk usage before cleanup..."
+df -h
+
+echo "🧹 Cleaning APT (Advanced Package Tool) cache..."
+sudo apt-get clean
+sudo apt-get autoclean
+sudo apt-get autoremove -y
+
+echo "🗑️ Cleaning old logs..."
+sudo journalctl --vacuum-time=7d
+
+echo "🧹 Removing temporary files..."
+sudo rm -rf /tmp/*
+sudo rm -rf /var/tmp/*
+
+echo "🐳 Cleaning Docker (SAFE)..."
+# Remove stopped containers, unused networks, dangling images
+sudo docker system prune -f
+
+echo "📦 Removing unused Docker volumes (ONLY unused ones)..."
+sudo docker volume prune -f
+
+echo "🧼 Cleaning thumbnail cache (optional)..."
+rm -rf ~/.cache/thumbnails/*
+
+echo "🔍 Checking disk usage after cleanup..."
+df -h
+
+echo "✅ Cleanup completed safely!"
